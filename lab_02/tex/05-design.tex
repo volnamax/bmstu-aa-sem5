@@ -1,0 +1,235 @@
+\chapter{Конструкторский раздел}
+
+В этом разделе представлены: требования к программному обеспечению и схемы реализуемых алгоритмов.
+
+
+\section{Требования к программному обеспечению}
+
+На вход принимаются две матрицы c размерами.
+На выходе программе требуется получить результирующую матрицу после умножения входных матриц.
+
+\section{Описание используемых типов данных}
+При реализации алгоритмов будет использован следующий тип данных, матрица --- двумерный массив значений целочисленного типа.
+
+\section{Разработка алгоритмов}
+
+Алгоритмы принимают на вход матрицы $mtrx$ и $matry$.
+На выходе у алгоритмов результат перемножения двух матриц, записанный в матрицу $matr\_res$.
+На рисунках~\ref{img:classic}~---~~\ref{img:strassen} приведены схемы для реализуемых алгоритмов.
+	
+\includeimage
+	{classic} % Имя файла без расширения (файл должен быть расположен в директории inc/img/)
+	{f} % Обтекание (без обтекания)
+	{h} % Положение рисунка (см. figure из пакета float)
+	{1\textwidth} % Ширина рисунка
+	{Схема классического алгоритма умножения метриц} % Подпись рисунк
+	\clearpage
+
+\includeimage
+	{vinograde} % Имя файла без расширения (файл должен быть расположен в директории inc/img/)
+	{f} % Обтекание (без обтекания)
+	{h} % Положение рисунка (см. figure из пакета float)
+	{0.7\textwidth} % Ширина рисунка
+	{Схема aлгоритма Винограда} % Подпись рисунк
+	\clearpage
+
+\includeimage
+	{vino_oprimo} % Имя файла без расширения (файл должен быть расположен в директории inc/img/)
+	{f} % Обтекание (без обтекания)
+	{h} % Положение рисунка (см. figure из пакета float)
+	{0.7\textwidth} % Ширина рисунка
+	{Схема оптимизированного aлгоритма Винограда} % Подпись рисунк
+	\clearpage
+
+\includeimage
+	{strassen} % Имя файла без расширения (файл должен быть расположен в директории inc/img/)
+	{f} % Обтекание (без обтекания)
+	{h} % Положение рисунка (см. figure из пакета float)
+	{1\textwidth} % Ширина рисунка
+	{Схема алгоритма Штрассена} % Подпись рисунк
+\clearpage
+
+\section{Модель вычислений}
+Для последующего вычисления трудоемкости необходимо ввести модель вычислений:
+
+\begin{enumerate}
+	\item операции из списка (\ref{eq:opers}) имеют трудоемкость 1;
+	\begin{equation}
+		\label{eq:opers}
+		+, -, *, /, \%, ==, !=, <, >, <=, >=, [], ++, {-}-
+	\end{equation}
+	\item трудоемкость оператора выбора \textit{if условие then A else B} рассчитывается как (\ref{eq:if});
+	\begin{equation}
+		\label{eq:if}
+		f_{if} = f_{\text{условия}} +
+		\begin{cases}
+			f_A, & \text{если условие выполняется,}\\
+			f_B, & \text{иначе.}
+		\end{cases}
+	\end{equation}
+	\item трудоемкость цикла рассчитывается как (\ref{eq:for});
+	\begin{equation}
+		\label{eq:for}
+		f_{for} = f_{\text{инициализации}} + f_{\text{сравнения}} + N(f_{\text{тела}} + f_{\text{инкремента}} + f_{\text{сравнения}})
+	\end{equation}
+	\item трудоемкость вызова функции равна 0.
+\end{enumerate}
+
+
+\section{Трудоемкость алгоритмов}
+
+Трудоемкость инициализации результирующей матрицы учитываться не будет, так как данное действие есть во всех алгоритмах и не является трудоемким.
+
+Обозначения для расчета трудоемкости :
+\begin{itemize}
+	\item N -- кол-во строк первой матрицы;
+	\item M -- кол-во столбцов первой матрицы и кол-во строк второй матрицы;
+	\item Q -- кол-во столбцов второй матрицы.
+	
+\end{itemize}
+
+\textbf{Трудоемкость классический алгоритм перемножения матриц}
+
+Трудоемкость стандартного алгоритма умножения матриц состоит из:
+
+\begin{itemize}
+	\item внешнего цикла по $i \in [1..M]$, трудоемкость которого: $f = 2 + M \cdot (2 + f_{body})$;
+	\item цикла по $j \in [1..N]$, трудоемкость которого: $f = 2 + N \cdot (2 + f_{body})$;
+	\item цикла по $k \in [1..Q]$, трудоемкость которого: $f = 2 + 14 \cdot Q$.
+\end{itemize}
+
+Поскольку трудоемкость стандартного алгоритма равна трудоемкости внешнего цикла, то
+\begin{equation}
+	\label{for:classic}
+	f_{classic} = 2 + M \cdot (4 + N \cdot (4 + 14Q)) = 2 + 4M + 4MN + 14MQN \approx 14MQN
+\end{equation}
+
+\textbf{Трудоемкость алгоритм Винограда}
+
+Трудоемкость алгоритма Винограда складывается из:
+\begin{itemize}
+	\item трудоемкости создания и инициализации массивов $row$ и $col$:
+	\begin{equation}
+		\label{eqn:f-arrs}
+		f_{arrs} = f_{row} + f_{col}
+	\end{equation}
+	\item трудоемкость заполнения массива $row$:
+	\begin{equation}
+		\begin{gathered}
+			f_{row} = 2 + N \cdot (2 + 4 + \frac{M}{2} \cdot (4 + 6 + 1 + 2 + 3 \cdot 2)) = \\
+			2 + 6M + \frac{19MN}{2};
+		\end{gathered}
+	\end{equation}
+	\item трудоемкость заполнения массива $col$:
+	\begin{equation}
+		\begin{gathered}
+			f_{col} = 2 + Q \cdot (2 + 4 + \frac{M}{2} \cdot (4 + 6 + 1 + 2 + 3 \cdot 2)) = \\
+			2 + 6Q + \frac{19MQ}{2};
+		\end{gathered}
+	\end{equation}
+	\item трудоемкость цикла умножения для четных размеров:
+	\begin{equation}
+		\begin{gathered}
+			f_{mul} = 2 + N \cdot (4 + Q \cdot (13 + 32\frac{M}{2})) = 2 + 4N + \\
+			+ 13NQ + \frac{32MNQ}{2} = 2 + 4N + 13NQ + 16MNQ;
+		\end{gathered}
+	\end{equation}
+	\item трудоемкость цикла, выполняемого в случае нечетных размеров матрицы:
+	\begin{equation}
+		f_{oddLoop} = 3 + 
+		\begin{cases}
+			0, & \text{четная,} \\
+			2 + N \cdot (4 + Q \cdot (2 + 14)), & \text{иначе.}
+		\end{cases}
+	\end{equation}
+\end{itemize}
+Таким образом, для нечетного размера матрицы имеем:
+\begin{multline}
+	f_{odd} = f_{arrs} + f_{row} + f_{col} + f_{mul} + f_{oddLoop}  \approx 16MNQ;
+\end{multline}
+для четного:
+\begin{multline}
+	f_{even} = f_{arrs} + f_{row} + f_{col} + f_{mul} + f_{oddLoop} \approx 16MNQ.
+\end{multline}
+
+\textbf{Оптимизированный алгоритм Винограда}
+
+Трудоемкость оптимизации алгоритма Винограда осуществляется следующим образом:
+\begin{itemize}
+	\item операция $x = x + k$ заменяется на операцию $x += k$;
+	\item операция $x \cdot 2$ заменяется на $x << 1$;
+	\item некоторые значения для алгоритма вычисляются заранее.
+\end{itemize}
+
+Тогда трудоемкость алгоритма Винограда c примененными оптимизациями складывается из:
+\begin{itemize}
+	\item трудоемкости предвычисления значения $\frac{M}{2}$, равной 3;
+	\item трудоемкости $f_{arrs}$ (\ref{eqn:f-arrs}) создания и инициализации массивов $row$ и $col$;
+	\item трудоемкость заполнения массива $row$:
+	\begin{equation}
+		\begin{gathered}
+			f_{row} = 2 + N \cdot (2 + 2 + \frac{M}{2} \cdot (2 + 2 + 2 + 7)) = \\
+			2 + 2N + \frac{13MN}{2};
+		\end{gathered}
+	\end{equation}
+	\item трудоемкость заполнения массива $col$:
+	\begin{equation}
+		\begin{gathered}
+			f_{col} = 2 + Q \cdot (2 + 2 + \frac{M}{2} \cdot (2 + 2 + 2 + 7)) = \\
+			2 + 2Q + \frac{13MQ}{2};
+		\end{gathered}
+	\end{equation}
+	\item трудоемкость цикла умножения для четных размеров:
+	\begin{equation}
+		\begin{gathered}
+			f_{mul} = 2 + N \cdot (4 + Q \cdot (4 + 2 + \frac{M}{2} \cdot (2 + 2 + 3 + 6 + 2 + 6))) = \\
+			= 2 + 4N + 13NQ + \frac{32MNQ}{2} = 2 + 4N + 13NQ + 16MNQ;
+		\end{gathered}
+	\end{equation}
+	\item трудоемкость цикла, выполняемого в случае нечетных размеров матрицы:
+	\begin{equation}
+		f_{oddLoop} = 3 + 
+		\begin{cases}
+			0, & \text{четная,} \\
+			2 + N \cdot (4 + Q \cdot (2 + 11)), & \text{иначе.}
+		\end{cases}
+	\end{equation}
+\end{itemize}
+Таким образом, для нечетного размера матрицы имеем:
+\begin{multline}
+	f_{odd} = f_{arrs} + f_{row} + f_{col} + f_{mul} + f_{oddLoop}  \approx \frac{19MNQ}{2};
+\end{multline}
+для четного:
+\begin{multline}
+	f_{even} = f_{arrs} + f_{row} + f_{col} + f_{mul} + f_{oddLoop}  \approx \frac{19MNQ}{2}.
+\end{multline}
+
+
+\textbf{Трудоемкость алгоритма Штрассена}
+
+Трудоемкость алгоритма Штрассена осуществляется следующим образом:
+
+Трудоемкость сложения или вычитания двух матриц размера $N \times N$, рассчитывается по формуле \eqref{eq:matrix_sum}.
+\begin{equation}
+	\label{eq:matrix_sum}
+	f_{sum}(N) = 2 + N \cdot (2 + 2 + N \cdot (2 + 8)) = 10N^2 + 4N + 2
+\end{equation}
+
+Тогда трудоемкость описывается рекуррентной формулой \eqref{eq:strassen_form}.
+
+\begin{equation}
+	\label{eq:strassen_form}
+	T(n) = 
+	\begin{cases}
+		7, & n = 1\\
+		7T(\frac{n}{2}) + 18f_{sum}(\frac{n}{2}) + 65, & n > 1
+	\end{cases}
+\end{equation}
+
+Тогда по формуле \eqref{eq:strassen_comp} возможно рассчитать трудоемкость для матриц порядка $n$.
+\begin{equation}
+	\label{eq:strassen_comp}
+	\begin{gathered}
+		T(n) = 7^{\log_{2}{n}} T(1) + \sum_{i=0}^{(\log_{2}{n}) - 1} (7^i (18f_{sum}(\frac{n}{2 ^ {i + 1}}) + 65))
+	\end{gathered}
+\end{equation}

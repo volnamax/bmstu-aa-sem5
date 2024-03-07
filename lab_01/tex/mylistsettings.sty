@@ -1,0 +1,28 @@
+%mylistsettings.sty
+\ProvidesPackage{mylistsettings}
+% для ненумерованного списка 
+\usepackage{enumitem}
+\setlist[itemize,1]{label=--}
+\setlist[enumerate,1]{label=\arabic*)}
+
+% hard table
+\usepackage{threeparttable}
+
+% замена на норм ковычки
+\usepackage{csquotes}
+\usepackage{babel}
+\MakeOuterQuote{"}
+
+% Замена Ё на Е
+\DeclareUnicodeCharacter{0401}{\CYRE}
+% Замена ё на е
+\DeclareUnicodeCharacter{0451}{\cyre}
+
+\usepackage{csvsimple}
+\usepackage{graphicx}  % Для поддержки широкого спектра графических форматов
+
+
+
+
+
+
