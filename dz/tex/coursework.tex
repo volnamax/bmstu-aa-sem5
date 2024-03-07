@@ -1,0 +1,31 @@
+\documentclass{bmstu}
+\usepackage{mylistsettings}
+
+\bibliography{biblio}
+
+\begin{document}
+	\makereporttitle
+		{Информатика и системы управления} % Название факультета
+		{Программное обеспечение ЭВМ и информационные технологии} % Название кафедры
+		{домашнему заданию №~1} % Название работы (в дат. падеже)
+		{Анализ алгоритмов} % Название курса (необязательный аргумент)
+		{Графовые представления} % Тема работы
+		{} % Номер варианта (необязательный аргумент)
+		{М.~Ю.~Вольняга/ИУ7-56Б} % Номер группы/ФИО студента (если авторов несколько, их необходимо разделить запятой)
+		{Л.~Л.~Волкова} % ФИО преподавателя
+	
+	\maketableofcontents
+	
+	\include{03-introduction}
+	\include{04-analysis}
+	\include{05-design}
+	%\include{06-implementation}
+	%\include{07-research}
+	\include{08-conclusion}
+	
+	%\include{09-appendix}
+	
+	\makebibliography
+
+
+\end{document}

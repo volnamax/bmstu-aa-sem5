@@ -1,0 +1,72 @@
+\chapter{Конструкторская часть}
+
+В данном разделе будут представлены псевдокоды алгоритмов двоичного поиска с одним и двумя сравнения с медианным элементом. 
+
+\section{Требования к программному обеспечению}
+
+К программному обеспечению предъявлен ряд требований:
+\begin{enumerate}
+	\item наличие интерфейса для выбора действий;
+	\item возможность ввода массива;
+	\item возможность выполнения операции поиска по массиву.
+\end{enumerate}
+
+\section{Разработка алгоритмов}
+
+На рисунке~\ref{alg:one-comp} представлен псевдокод алгоритма двоичного поиска с двумя сравнениями с медианным элементом.
+
+В качестве инструмента для создания псевдокода использован пакет \texttt{algorithmx}.
+
+\begin{algorithm}[H]
+	\caption{Псевдокод алгоритма бинарного поиска с двумя сравнениями с медианным элементом}
+	\label{alg:one-comp}
+	\text{\textbf{Вход}: ссылка на массив $arr$ размером $n$ и искомый элемент $x$}\\
+	\text{\textbf{Выход}: индекс найденного элемента $ind$}
+	\begin{algorithmic}[1]
+		\Function{BinSearchTwoComp}{$arr$, $n$, $x$}
+		\State $l\gets 0$
+		\State $h\gets n - 1$
+		\While{$l\le h$}
+		\State $m\gets l + (h - l) / 2$
+		\If{$arr[m] = x$}
+			\Return $m$
+		\ElsIf{$arr[m] < x$}
+			\State $l\gets m + 1$
+		\Else
+			\State $h\gets m - 1$
+		\EndIf
+		\EndWhile
+		\\ \Return $-1$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+На рисунке~\ref{alg:two-comp} представлен псевдокод алгоритма двоичного поиска с двумя сравнениями с медианным элементом.
+
+\begin{algorithm}[H]
+	\caption{Псевдокод алгоритма бинарного поиска с одним сравнением с медианным элементом}
+	\label{alg:two-comp}
+	\text{\textbf{Вход}: ссылка на массив $arr$ размером $n$ и искомый элемент $x$}\\
+	\text{\textbf{Выход}: индекс найденного элемента $ind$}
+	\begin{algorithmic}[1]
+		\Function{BinSearchOneComp}{$arr$, $n$, $x$}
+		\State $l\gets 0$
+		\State $h\gets n - 1$
+		\While{$l\ne h$}
+		\State $m\gets ceil(l + h) / 2$
+		\If{$arr[m] > x$}
+			\State $h\gets m - 1$
+		\Else
+			\State $l\gets m$
+		\EndIf
+		\EndWhile
+		\If{$arr[l] = x$}
+			\Return $l$
+		\EndIf \\
+		\Return $-1$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+\section*{Вывод}
+В данном разделе были перечислены требования к программному обеспечению и предоставлены псевдокоды реализуемых алгоритмов.

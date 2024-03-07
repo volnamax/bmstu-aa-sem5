@@ -1,0 +1,31 @@
+\chapter*{Приложение А}
+\addcontentsline{toc}{chapter}{Приложение А}
+
+\begin{center}
+	\captionsetup{justification=raggedright,singlelinecheck=off}
+	\begin{longtable}[c]{|l|l|l|l|}
+		\caption{Параметризация для класса данных 1\label{tbl:param_kd1-1}, Elites --- количество элитных муравьев, Mistake --- ошибочность полученного результата}\\ \hline
+		$\alpha$ & $\rho$ & Elites & Mistake
+		\csvreader{inc/csv/class1.csv}{}
+		{\\ \hline \csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+		\\ \hline
+	\end{longtable}
+\end{center}
+
+
+\chapter*{Приложение Б}
+\addcontentsline{toc}{chapter}{Приложение Б}
+
+
+
+\begin{center}
+	\captionsetup{justification=raggedright,singlelinecheck=off}
+	\begin{longtable}[c]{|l|l|l|l|}
+		\caption{Параметризация для класса данных 2\label{tbl:param_kd1}, Elites --- количество элитных муравьев, Mistake --- ошибочность полученного результата}\\ \hline
+		$\alpha$ & $\rho$ & Elites & Mistake
+		\csvreader{inc/csv/class2.csv}{}
+		{\\ \hline \csvcoli & \csvcolii & \csvcoliii & \csvcoliv}
+		\\ \hline
+	\end{longtable}
+\end{center}
+
